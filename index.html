@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hardware Hero – WebGL Shooter</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="gameContainer">
+  <canvas id="gameCanvas" width="800" height="600"></canvas>
+
+  <!-- HUD starts hidden (opacity: 0) so it doesn't show on the menu -->
+  <div id="hud" style="opacity: 0;">
+    <div id="scoreDisplay">🏆 0</div>
+    <div id="targetLabel">
+      🎯 Target: <span id="targetName">—</span>
+      <span id="targetCategory">(—)</span>
+    </div>
+    <div id="livesDisplay">❤️ ❤️ ❤️</div>
+  </div>
+
+  <!-- Educational Description Box -->
+  <div id="descriptionBox" style="opacity: 0;">
+    <p id="targetDescription">Read the target description here...</p>
+  </div>
+
+  <div id="feedback"></div>
+
+  <div id="menu" class="screen">
+    <h1>🛸 Hardware Hero</h1>
+    <p>Shoot the correct hardware component!<br>Wrong hits cost you a life.<br><br>
+       <b>PC:</b> Mouse / Arrows to move · Click / SPACE to fire<br>
+       <b>Mobile:</b> Drag to move · Tap to fire<br><br>
+       ⏸ P to Pause · 🔊 M to Mute
+    </p>
+    <button id="startBtn">▶ Start Game</button>
+  </div>
+
+  <div id="pause" class="screen hidden">
+    <h1>⏸ Paused</h1>
+    <p>Press <b>P</b> to resume</p>
+  </div>
+
+  <div id="gameover" class="screen hidden">
+    <h1>💀 Game Over</h1>
+    <p class="final-score">Score: <span id="finalScore">0</span></p>
+    <p class="best-score">Best: <span id="bestScore">0</span></p>
+    <button id="restartBtn">🔄 Play Again</button>
+  </div>
+</div>
+
+<script type="module" src="js/game.js"></script>
+</body>
+</html>

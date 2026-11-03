@@ -1,0 +1,212 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  background-color: #080811;
+  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Responsive Game Wrapper */
+#gameContainer {
+  position: relative;
+  width: min(800px, 100vw);
+  aspect-ratio: 4 / 3;
+  height: auto;
+  max-height: 100vh;
+  box-shadow: 0 0 30px rgba(0, 225, 255, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #2a2a40;
+}
+
+/* Mobile Full-Screen */
+@media (max-width: 800px) {
+  #gameContainer {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    border: none;
+    aspect-ratio: auto;
+  }
+}
+
+#gameCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none; /* Prevents scrolling on mobile */
+  background: radial-gradient(circle at 50% 15%, #1b2a4a 0%, #0a0a1a 55%, #05050d 100%);
+}
+
+/* HUD */
+#hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  z-index: 10;
+  transition: opacity 0.3s ease;
+}
+
+#targetLabel {
+  background: rgba(15, 23, 42, 0.85);
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1px solid #3b82f6;
+  color: #93c5fd;
+  text-align: center;
+}
+
+#targetName {
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#scoreDisplay, #livesDisplay {
+  background: rgba(15, 23, 42, 0.75);
+  padding: 8px 14px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+/* Educational Description Box */
+#descriptionBox {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 600px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid #3b82f6;
+  border-radius: 8px;
+  padding: 12px 20px;
+  text-align: center;
+  pointer-events: none;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+  z-index: 10;
+  transition: opacity 0.3s ease;
+}
+
+#targetDescription {
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  margin: 0;
+  line-height: 1.4;
+}
+
+#targetCategory {
+  color: #93c5fd;
+  font-size: 0.9rem;
+  font-weight: normal;
+  margin-left: 4px;
+}
+
+/* Feedback Popups */
+#feedback {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: 800;
+  padding: 12px 24px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 20;
+  text-align: center;
+  white-space: nowrap;
+}
+
+#feedback.correct {
+  background-color: rgba(34, 197, 94, 0.9);
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.6);
+}
+
+#feedback.wrong {
+  background-color: rgba(239, 68, 68, 0.9);
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+}
+
+/* UI Overlay Screens */
+.screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0a0a1a; /* Solid background to hide HUD */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  z-index: 30;
+  transition: opacity 0.3s ease;
+}
+
+.screen.hidden {
+  display: none;
+  pointer-events: none;
+}
+
+.screen h1 {
+  font-size: clamp(2rem, 8vw, 3rem);
+  margin-bottom: 16px;
+  color: #38bdf8;
+  text-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+}
+
+.screen p {
+  font-size: clamp(0.9rem, 4vw, 1.1rem);
+  line-height: 1.6;
+  color: #cbd5e1;
+  margin-bottom: 20px;
+}
+
+.final-score { font-size: 1.8rem !important; color: #facc15 !important; font-weight: bold; }
+.best-score  { font-size: 1.2rem !important; color: #a78bfa !important; margin-bottom: 20px !important;}
+
+button {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  border: none;
+  padding: 14px 32px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+  transition: transform 0.15s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+}
+button:active { transform: translateY(1px); }
