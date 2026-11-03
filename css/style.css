@@ -1,3 +1,6 @@
+/* =========================================
+   GLOBAL RESET & BASE STYLES
+   ========================================= */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -13,53 +16,48 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  overflow: hidden;
+  overflow: hidden; /* Prevents scrollbars */
 }
 
-/* Responsive Game Wrapper */
+/* =========================================
+   GAME CONTAINER (DESKTOP & LAPTOP)
+   ========================================= */
 #gameContainer {
   position: relative;
-  width: min(800px, 100vw);
+  /* Scales down on laptops, maxes out at 1000px on desktops */
+  width: 95vw; 
+  max-width: 1000px;
+  /* Ensures the game never gets taller than the screen */
+  max-height: 95vh; 
+  /* Maintains perfect 4:3 rectangle geometry */
   aspect-ratio: 4 / 3;
-  height: auto;
-  max-height: 100vh;
-  box-shadow: 0 0 30px rgba(0, 225, 255, 0.2);
-  border-radius: 8px;
+  box-shadow: 0 0 40px rgba(0, 225, 255, 0.15);
+  border-radius: 12px;
   overflow: hidden;
   border: 2px solid #2a2a40;
-}
-
-/* Mobile Full-Screen */
-@media (max-width: 800px) {
-  #gameContainer {
-    width: 100vw;
-    height: 100vh;
-    border-radius: 0;
-    border: none;
-    aspect-ratio: auto;
-  }
 }
 
 #gameCanvas {
   display: block;
   width: 100%;
   height: 100%;
-  touch-action: none; /* Prevents scrolling on mobile */
+  touch-action: none; /* Prevents mobile dragging/zooming */
   background: radial-gradient(circle at 50% 15%, #1b2a4a 0%, #0a0a1a 55%, #05050d 100%);
 }
 
-/* HUD */
+/* =========================================
+   HUD (HEADS-UP DISPLAY)
+   ========================================= */
 #hud {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  padding: 16px 24px;
+  padding: clamp(10px, 2vw, 24px);
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start; /* Aligns items to top */
   pointer-events: none;
-  font-size: 1.2rem;
   font-weight: bold;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
   z-index: 10;
@@ -68,11 +66,13 @@ body {
 
 #targetLabel {
   background: rgba(15, 23, 42, 0.85);
-  padding: 8px 18px;
+  padding: clamp(6px, 1vw, 12px) clamp(12px, 2vw, 20px);
   border-radius: 20px;
   border: 1px solid #3b82f6;
   color: #93c5fd;
   text-align: center;
+  /* Prevents the label from expanding infinitely */
+  max-width: 60vw; 
 }
 
 #targetName {
@@ -81,25 +81,36 @@ body {
   letter-spacing: 1px;
 }
 
-#scoreDisplay, #livesDisplay {
-  background: rgba(15, 23, 42, 0.75);
-  padding: 8px 14px;
-  border-radius: 12px;
-  white-space: nowrap;
+#targetCategory {
+  color: #93c5fd;
+  font-size: 0.85em;
+  font-weight: normal;
+  margin-left: 4px;
 }
 
-/* Educational Description Box */
+#scoreDisplay, #livesDisplay {
+  background: rgba(15, 23, 42, 0.75);
+  padding: clamp(6px, 1vw, 12px) clamp(10px, 1.5vw, 16px);
+  border-radius: 12px;
+  white-space: nowrap;
+  /* Text scales smoothly between 1rem and 1.3rem based on screen size */
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+}
+
+/* =========================================
+   DESCRIPTION BOX (EDUCATIONAL UI)
+   ========================================= */
 #descriptionBox {
   position: absolute;
-  bottom: 20px;
+  bottom: clamp(10px, 2vw, 24px);
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
-  max-width: 600px;
+  max-width: 700px;
   background: rgba(15, 23, 42, 0.85);
   border: 1px solid #3b82f6;
   border-radius: 8px;
-  padding: 12px 20px;
+  padding: clamp(8px, 1.5vw, 14px) clamp(12px, 2vw, 20px);
   text-align: center;
   pointer-events: none;
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
@@ -108,28 +119,23 @@ body {
 }
 
 #targetDescription {
-  font-size: 0.95rem;
+  font-size: clamp(0.75rem, 1.2vw, 1rem);
   color: #cbd5e1;
   margin: 0;
   line-height: 1.4;
 }
 
-#targetCategory {
-  color: #93c5fd;
-  font-size: 0.9rem;
-  font-weight: normal;
-  margin-left: 4px;
-}
-
-/* Feedback Popups */
+/* =========================================
+   FEEDBACK POPUPS
+   ========================================= */
 #feedback {
   position: absolute;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
   font-weight: 800;
-  padding: 12px 24px;
+  padding: clamp(8px, 1.5vw, 16px) clamp(16px, 3vw, 32px);
   border-radius: 8px;
   pointer-events: none;
   opacity: 0;
@@ -151,14 +157,16 @@ body {
   box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
 }
 
-/* UI Overlay Screens */
+/* =========================================
+   OVERLAY SCREENS (MENU, PAUSE, GAME OVER)
+   ========================================= */
 .screen {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: #0a0a1a; /* Solid background to hide HUD */
+  background: #0a0a1a; /* Solid color to hide the game running behind it */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -175,28 +183,29 @@ body {
 }
 
 .screen h1 {
-  font-size: clamp(2rem, 8vw, 3rem);
-  margin-bottom: 16px;
+  /* Scales dynamically between 2rem and 3.5rem */
+  font-size: clamp(2rem, 5vw, 3.5rem); 
+  margin-bottom: clamp(10px, 2vw, 20px);
   color: #38bdf8;
   text-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
 }
 
 .screen p {
-  font-size: clamp(0.9rem, 4vw, 1.1rem);
+  font-size: clamp(0.9rem, 1.8vw, 1.2rem);
   line-height: 1.6;
   color: #cbd5e1;
-  margin-bottom: 20px;
+  margin-bottom: clamp(15px, 3vw, 30px);
 }
 
-.final-score { font-size: 1.8rem !important; color: #facc15 !important; font-weight: bold; }
-.best-score  { font-size: 1.2rem !important; color: #a78bfa !important; margin-bottom: 20px !important;}
+.final-score { font-size: clamp(1.5rem, 3vw, 2rem) !important; color: #facc15 !important; font-weight: bold; }
+.best-score  { font-size: clamp(1rem, 2vw, 1.3rem) !important; color: #a78bfa !important; margin-bottom: 20px !important; }
 
 button {
   background: linear-gradient(135deg, #2563eb, #1d4ed8);
   color: #ffffff;
   border: none;
-  padding: 14px 32px;
-  font-size: 1.2rem;
+  padding: clamp(10px, 1.5vw, 16px) clamp(24px, 3vw, 40px);
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
   font-weight: 700;
   border-radius: 30px;
   cursor: pointer;
@@ -210,3 +219,60 @@ button:hover {
   box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
 }
 button:active { transform: translateY(1px); }
+
+
+/* =========================================
+   MOBILE OPTIMIZATIONS (Screens < 768px)
+   ========================================= */
+@media (max-width: 768px) {
+  /* Full width, but let aspect-ratio dictate the height (prevents stretching) */
+  #gameContainer {
+    width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+  }
+
+  /* HUD Adjustments for Small Screens */
+  #hud {
+    padding: 8px;
+  }
+
+  #targetLabel {
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    /* Truncate long text with ... instead of wrapping and breaking the UI */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 50vw;
+  }
+
+  /* Hide the category (e.g., "(Processing)") on mobile to save space */
+  #targetCategory {
+    display: none; 
+  }
+
+  #scoreDisplay, #livesDisplay {
+    padding: 4px 8px;
+    font-size: 0.85rem;
+  }
+
+  /* Move Description Box up slightly for mobile nav bars */
+  #descriptionBox {
+    bottom: 8px;
+    padding: 6px 10px;
+    width: 95%;
+  }
+
+  #targetDescription {
+    font-size: 0.7rem;
+    line-height: 1.2;
+  }
+
+  /* Hide the "PC controls" text block on mobile, keep "Mobile controls" */
+  .pc-instructions {
+    display: none;
+  }
+}
