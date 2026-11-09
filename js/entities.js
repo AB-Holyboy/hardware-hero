@@ -5,7 +5,7 @@ export class Player {
     this.w = 54;
     this.h = 86;
     this.x = canvasWidth / 2;
-    this.y = canvasHeight - 60;
+    this.y = canvasHeight - 110; // Changed from 60 to 110 to move the ship up
     this.speed = 450; 
     this.texture = texture;
     this.bounds = { width: canvasWidth, height: canvasHeight };

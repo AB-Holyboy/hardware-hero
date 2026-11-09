@@ -102,15 +102,15 @@ body {
    ========================================= */
 #descriptionBox {
   position: absolute;
-  bottom: clamp(10px, 2vw, 24px);
+  bottom: 4px; /* Changed from clamp() to 4px to push it to the very bottom */
   left: 50%;
   transform: translateX(-50%);
-  width: 90%;
+  width: 95%; /* Slightly wider */
   max-width: 700px;
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(15, 23, 42, 0.9); /* Slightly darker background for better readability */
   border: 1px solid #3b82f6;
   border-radius: 8px;
-  padding: clamp(8px, 1.5vw, 14px) clamp(12px, 2vw, 20px);
+  padding: 6px 12px; /* Reduced padding so the box isn't as tall */
   text-align: center;
   pointer-events: none;
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
